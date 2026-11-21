@@ -14,6 +14,15 @@
 
 - Open Stories at a time: 3
 
+## Models
+
+Delete a line to keep the skill's default.
+
+- Lead: `claude-opus-5-5`
+- Dev: `claude-sonnet-5-5`
+- Slice QA: `claude-sonnet-5-5`
+- Story QA: `claude-opus-5-5`
+
 ## Checks
 
 Commands every Dev runs before a review request, and every QA runs when checking:

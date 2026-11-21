@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ps-factory clip</title>
+<style>
+  :root { --bg:#0d111b; --panel:#161d2e; --ink:#eef1f7; --muted:#8a95ab; --opus:#c9a2ff; --sonnet:#7fd1b9; --accent:#ffb86b; --line:#2e3a55; --ok:#7fd18b; --bad:#ff7b7b; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { width:1280px; height:720px; overflow:hidden; background:var(--bg); color:var(--ink); font-family:"SF Pro Display","Inter","Helvetica Neue",Arial,sans-serif; }
+  body { background: radial-gradient(1200px 600px at 80% -10%, #1c2540 0%, var(--bg) 60%); }
+  .scene { position:absolute; inset:0; padding:70px 90px; }
+  .a { will-change: transform, opacity; }
+  .kicker { color:var(--accent); font-size:18px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:12px; }
+  h1 { font-size:96px; font-weight:800; letter-spacing:-.02em; }
+  h2 { font-size:46px; font-weight:750; letter-spacing:-.01em; margin-bottom:36px; }
+  .lead { font-size:28px; color:var(--muted); line-height:1.4; max-width:980px; }
+  .card { position:absolute; width:250px; background:var(--panel); border:2px solid var(--line); border-radius:16px; padding:18px 20px; }
+  .card b { font-size:26px; display:block; } .card span { color:var(--muted); font-size:17px; line-height:1.35; display:block; margin-top:6px; }
+  .pill { font-size:14px; padding:3px 9px; border-radius:7px; margin-left:8px; vertical-align:middle; font-weight:600; }
+  .opus { border-color:var(--opus); } .sonnet { border-color:var(--sonnet); } .you { border-color:var(--accent); }
+  .pill.opus { background:#3a2a55; color:var(--opus); } .pill.sonnet { background:#1e3b34; color:var(--sonnet); }
+  .wire { position:absolute; height:3px; background:var(--line); transform-origin:left center; }
+  .row { display:flex; align-items:center; gap:18px; font-size:26px; margin-bottom:20px; }
+  .num { width:40px; height:40px; border-radius:50%; background:var(--accent); color:var(--bg); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px; flex:none; }
+  .row em { font-style:normal; color:var(--accent); font-weight:650; }
+  code { font-family:"SF Mono","JetBrains Mono",Menlo,monospace; font-size:.92em; color:#d6dcff; }
+  .lane { position:absolute; height:4px; border-radius:2px; transform-origin:left center; }
+  .lane-label { position:absolute; font-size:19px; color:var(--muted); }
+  .pr { position:absolute; font-size:19px; padding:7px 14px; border-radius:10px; background:var(--panel); border:1.5px solid var(--line); white-space:nowrap; }
+  .file { position:absolute; width:330px; background:var(--panel); border:2px solid var(--line); border-radius:14px; padding:16px 20px; font-size:19px; line-height:1.55; }
+  .file .t { color:var(--accent); font-weight:700; margin-bottom:6px; font-size:20px; }
+  .ctx { position:absolute; width:330px; height:250px; border-radius:14px; border:2px dashed var(--line); padding:16px 20px; font-size:19px; color:var(--muted); }
+  .term { position:absolute; left:90px; right:90px; top:210px; background:#080b12; border:1px solid var(--line); border-radius:16px; padding:30px 34px; font-family:"SF Mono","JetBrains Mono",Menlo,monospace; font-size:27px; line-height:1.9; }
+  .term .p { color:var(--sonnet); } .term .c { color:var(--muted); }
+  .caret { display:inline-block; width:12px; height:28px; background:var(--ink); vertical-align:-4px; margin-left:2px; }
+  .ok { color:var(--ok); } .bad { color:var(--bad); }
+  .progress { position:absolute; left:0; bottom:0; height:5px; background:var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- 1. Title 0–4.5 -->
+<div class="scene" data-s="0" data-e="4.5">
+  <div class="a kicker" data-in="0.3">github.com/PingSunn/skills</div>
+  <h1 class="a" data-in="0.5"><span style="color:var(--accent)">ps</span>-factory</h1>
+  <p class="a lead" data-in="1.2" style="margin-top:22px">Talk to one agent. A team of agents builds, reviews and reports back.</p>
+  <p class="a lead" data-in="2.0" style="margin-top:12px">On Orca or Herdr.</p>
+</div>
+
+<!-- 2. Roles 4.5–10 -->
+<div class="scene" data-s="4.5" data-e="10">
+  <div class="a kicker" data-in="0.1">The team</div>
+  <h2 class="a" data-in="0.2">Four roles</h2>
+  <div class="a card you" data-in="0.6" style="left:90px; top:270px"><b>You</b><span>instruct the Orchestrator only</span></div>
+  <div class="a wire" data-in="1.0" data-grow style="left:340px; top:330px; width:50px"></div>
+  <div class="a card sonnet" data-in="1.1" style="left:390px; top:270px"><b>Orchestrator<i class="pill sonnet">Sonnet</i></b><span>one per project, routes work</span></div>
+  <div class="a wire" data-in="1.5" data-grow style="left:640px; top:330px; width:50px"></div>
+  <div class="a card opus" data-in="1.6" style="left:690px; top:270px"><b>Lead<i class="pill opus">Opus</i></b><span>one per Story, splits it into Slices</span></div>
+  <div class="a wire" data-in="2.0" data-grow style="left:940px; top:290px; width:50px"></div>
+  <div class="a card sonnet" data-in="2.1" style="left:990px; top:225px; width:200px"><b>Dev<i class="pill sonnet">Sonnet</i></b><span>builds a Slice</span></div>
+  <div class="a wire" data-in="2.4" data-grow style="left:940px; top:362px; width:50px"></div>
+  <div class="a card sonnet" data-in="2.5" style="left:990px; top:342px; width:200px"><b>QA<i class="pill sonnet">Sonnet</i></b><span>checks it; Opus for the whole Story</span></div>
+  <p class="a lead" data-in="3.2" style="position:absolute; left:90px; top:540px">Dev and QA talk directly. Reports go up one level.</p>
+</div>
+
+<!-- 3. Flow 10–16 -->
+<div class="scene" data-s="10" data-e="16">
+  <div class="a kicker" data-in="0.1">One Story</div>
+  <h2 class="a" data-in="0.2">"Retry failed LINE sends"</h2>
+  <div class="a row" data-in="0.6"><div class="num">1</div><div><em>Orchestrator</em> opens Story <code>line-retry</code></div></div>
+  <div class="a row" data-in="1.2"><div class="num">2</div><div><em>Lead</em> cuts <code>feat/line-retry</code>, splits Slices <code>api</code> + <code>ui</code></div></div>
+  <div class="a row" data-in="1.8"><div class="num">3</div><div><em>Dev</em> opens a Slice PR → <em>QA</em> <span class="bad">fail</span> → fix → <span class="ok">pass</span></div></div>
+  <div class="a row" data-in="2.4"><div class="num">4</div><div>Story PR → whole-Story QA → <em>you merge</em></div></div>
+</div>
+
+<!-- 4. Branches 16–21 -->
+<div class="scene" data-s="16" data-e="21">
+  <div class="a kicker" data-in="0.1">Branch strategy</div>
+  <h2 class="a" data-in="0.2">Nothing lands on main directly</h2>
+  <div class="a lane" data-in="0.5" data-grow style="left:90px; top:300px; width:1100px; background:#56627d"></div>
+  <div class="a lane-label" data-in="0.5" style="left:90px; top:265px">Target Branch</div>
+  <div class="a lane" data-in="0.9" data-grow style="left:200px; top:420px; width:820px; background:var(--accent)"></div>
+  <div class="a lane-label" data-in="0.9" style="left:200px; top:385px">feat/line-retry</div>
+  <div class="a lane" data-in="1.3" data-grow style="left:290px; top:540px; width:300px; background:var(--sonnet)"></div>
+  <div class="a lane-label" data-in="1.3" style="left:290px; top:505px">slice: api</div>
+  <div class="a lane" data-in="1.6" data-grow style="left:660px; top:540px; width:300px; background:var(--sonnet)"></div>
+  <div class="a lane-label" data-in="1.6" style="left:660px; top:505px">slice: ui</div>
+  <div class="a pr" data-in="2.2" style="left:470px; top:455px">Slice PR ↑ <span class="ok">QA pass</span></div>
+  <div class="a pr" data-in="2.6" style="left:840px; top:455px">Slice PR ↑ <span class="ok">QA pass</span></div>
+  <div class="a pr" data-in="3.1" style="left:870px; top:335px; border-color:var(--accent)">Story PR ↑ you merge</div>
+</div>
+
+<!-- 5. Memory 21–26 -->
+<div class="scene" data-s="21" data-e="26">
+  <div class="a kicker" data-in="0.1">Memory</div>
+  <h2 class="a" data-in="0.2">/clear any time. Nothing is lost.</h2>
+  <div class="a file" data-in="0.5" style="left:90px; top:250px"><div class="t">ledger.md</div>line-retry: Slice 2/3 in QA<br>census-export: PR ready<br><span style="color:var(--muted)">written before every reply</span></div>
+  <div class="a ctx" id="ctx" data-in="0.9" style="left:860px; top:250px; height:150px">Orchestrator context</div>
+  <div class="a pr" data-in="1.6" style="left:520px; top:290px; border-color:var(--bad)">/clear</div>
+  <div class="a pr" data-in="2.4" style="left:470px; top:380px; border-color:var(--ok)">hook restores →</div>
+  <div class="a file" data-in="2.8" style="left:860px; top:250px; border-color:var(--ok)"><div class="t">restored</div>line-retry: Slice 2/3 in QA<br>census-export: PR ready<br><span class="ok">continues where it left off</span></div>
+</div>
+
+<!-- 6. Start 26–32 -->
+<div class="scene" data-s="26" data-e="32">
+  <div class="a kicker" data-in="0.1">Start</div>
+  <h2 class="a" data-in="0.2">Three commands</h2>
+  <div class="term a" data-in="0.4">
+    <div><span class="p">$ </span><span data-type="0.7" data-text="npx skills add PingSunn/skills -g"></span></div>
+    <div><span class="p">&gt; </span><span data-type="2.0" data-text="/ps-factory init"></span><span class="c" data-type="2.7" data-text="   once per project"></span></div>
+    <div><span class="p">&gt; </span><span data-type="3.3" data-text="/ps-factory"></span><span class="c" data-type="3.8" data-text="   then just describe the work"></span><span class="caret" id="caret"></span></div>
+  </div>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<script>
+  const TOTAL = 32;
+  const ease = x => 1 - Math.pow(1 - Math.min(Math.max(x, 0), 1), 3);
+  const scenes = [...document.querySelectorAll('.scene')];
+  for (const el of document.querySelectorAll('[data-text]')) el.textContent = '';
+  window.TOTAL = TOTAL;
+  window.render = (t) => {
+    for (const sc of scenes) {
+      const s = +sc.dataset.s, e = +sc.dataset.e, local = t - s;
+      const fadeOut = e < TOTAL ? ease((e - t) / 0.45) : 1;
+      const visible = t >= s && t < e + 0.01;
+      sc.style.display = visible ? 'block' : 'none';
+      if (!visible) continue;
+      sc.style.opacity = fadeOut;
+      for (const el of sc.querySelectorAll('.a')) {
+        const p = ease((local - +el.dataset.in) / 0.55);
+        el.style.opacity = p;
+        if (el.hasAttribute('data-grow')) { el.style.transform = `scaleX(${p})`; el.style.opacity = p > 0 ? 1 : 0; }
+        else el.style.transform = `translateY(${(1 - p) * 22}px)`;
+      }
+      for (const el of sc.querySelectorAll('[data-type]')) {
+        const full = el.dataset.text, start = +el.dataset.type;
+        const n = Math.max(0, Math.min(full.length, Math.floor((local - start) * 32)));
+        el.textContent = full.slice(0, n);
+      }
+      const caret = sc.querySelector('#caret');
+      if (caret) caret.style.opacity = Math.floor(local * 2) % 2 ? 0 : 1;
+    }
+    document.getElementById('progress').style.width = (t / TOTAL * 100) + '%';
+  };
+  render(0);
+</script>
+</body>
+</html>

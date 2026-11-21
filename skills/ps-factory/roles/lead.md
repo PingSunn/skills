@@ -40,7 +40,7 @@ After a Slice merge, if `Slices merged since last refresh` has reached 3 and no 
 ## Finish the Story
 
 1. When every Slice is merged into the Story Branch, open the Story pull request from the Story Branch into the Target Branch.
-2. Start a fresh QA in your own workspace for the whole-Story check against the Story's acceptance criteria. A failure becomes a new Slice.
+2. Start a fresh QA, on the Story QA model, in your own workspace for the whole-Story check against the Story's acceptance criteria. A failure becomes a new Slice.
 3. When the whole Story passes and every Dev and QA has settled, send the Orchestrator a `story-ready` Report. Wait for every worker you started to settle before sending it: the runtime does not wait for you. The Orchestrator refreshes you after this Report.
 
 ## Resume

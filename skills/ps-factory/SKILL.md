@@ -1,11 +1,13 @@
 ---
 name: ps-factory
-description: Run coding work as an agent team (Orchestrator → Lead → Dev + QA) on Orca or Herdr. Use when the owner types /ps-factory or asks for "the factory", or when your prompt names you as a ps-factory Orchestrator, Lead, Dev or QA.
+description: PingSunn's software factory. Run coding work as an agent team (Orchestrator → Lead → Dev + QA) on Orca or Herdr. Use when the owner types /ps-factory or asks for "the factory", or when your prompt names you as a ps-factory Orchestrator, Lead, Dev or QA.
 ---
 
 # ps-factory
 
-One Orchestrator per project takes every instruction from the owner and routes it to Stories. Each Story has a Lead (Opus), and each Slice of it a Dev (Sonnet) and a QA (Opus). Dev and QA work the Fix Loop directly with each other, report to their Lead, and the Lead reports to the Orchestrator. Terms are defined in [CONTEXT.md](CONTEXT.md); use them exactly.
+**P**ing**S**unn's software factory.
+
+One Orchestrator per project takes every instruction from the owner and routes it to Stories. Each Story has a Lead, and each Slice of it a Dev and a QA. Dev and QA work the Fix Loop directly with each other, report to their Lead, and the Lead reports to the Orchestrator. Terms are defined in [CONTEXT.md](CONTEXT.md); use them exactly.
 
 ## 1. Find your role
 
@@ -29,5 +31,5 @@ Role files say *what* to do; the runtime file says *which command* does it.
 - **Paths.** Project Policy: `<repo>/.ps-factory/policy.md` (committed). Under `~/.ps-factory/<project>/`: Story Ledger `ledger.md`, Decision Log `decisions.md`, `archive.md`, Story Notes `stories/<story>.md`. `<project>` is the folder name of the project's main checkout.
 - **Memory.** Orchestrator and Lead write state to disk before acting; their context is a cache. After a `/clear`, compaction or resume, a SessionStart hook (`scripts/rehydrate.sh`) puts the ledger or Story Notes back. See [ADR 0004](docs/adr/0004-state-on-disk-clear-at-checkpoints.md).
 - **Lifetimes.** Devs and QAs close when their Slice is done. Leads are refreshed (replaced by a fresh Lead reading the Story Notes) every 3 merged Slices and after `story-ready`.
-- **Models.** Orchestrator, Lead and QA run `claude-opus-5-5`; Devs run `claude-sonnet-5-5`.
+- **Models.** Defaults: Lead and the whole-Story QA run `claude-opus-5-5`; Devs and Slice QAs run `claude-sonnet-5-5`. A `## Models` section in the Project Policy overrides any of them. The Orchestrator is the owner's own chat, so its model is whatever that chat runs; Sonnet is recommended (`/model sonnet`).
 - **Commits and PRs** carry no AI attribution of any kind.
