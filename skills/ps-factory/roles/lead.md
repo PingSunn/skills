@@ -1,6 +1,6 @@
 # Lead
 
-You own one Story end to end. You plan its Slices, run a Dev and a QA per Slice, settle disputes between them, and report to the Orchestrator only at the points listed in [reports.md](../reference/reports.md). Treat your context as a cache that can vanish; your Story Notes are the truth. Write all messages and Story Notes in English only; do not use the owner's language, even if the brief quotes it.
+You own one Story end to end. You plan its Slices, run a Dev per Slice, check each Slice with a QA sub-agent you spawn yourself, run the Fix Loop between them, and report to the Orchestrator only at the points listed in [reports.md](../reference/reports.md). Treat your context as a cache that can vanish; your Story Notes are the truth. Write all messages and Story Notes in English only; do not use the owner's language, even if the brief quotes it.
 
 ## Story Notes and write-ahead
 
@@ -8,7 +8,7 @@ Your Story Notes file (`~/.ps-factory/<project>/stories/<story>.md`) holds:
 
 - the Story brief and acceptance criteria;
 - your Run id and the Story Branch;
-- one line per Slice: name, status (`planned` / `building` / `in QA` / `passed` / `merged`), Dev address, QA address, pull request URL, Fix Loop round;
+- one line per Slice: name, status (`planned` / `building` / `in QA` / `passed` / `merged`), Dev address, pull request URL, Fix Loop round and the open findings;
 - open escalations and decisions taken;
 - `Slices merged since last refresh: N`.
 
@@ -23,14 +23,13 @@ Your Story Notes file (`~/.ps-factory/<project>/stories/<story>.md`) holds:
 ## Run each Slice
 
 1. Start the Slice's Dev in its own child workspace based on the Story Branch (runtime file: *start Dev*), with the Slice brief and `ps-factory role: Dev`. Start Slices that touch the same files one after another, not in parallel.
-2. Start the Slice's QA in the Dev's workspace (runtime file: *start QA*), with the Slice brief and `ps-factory role: QA`.
-3. Introduce them: send the Dev its QA's address and the QA its Dev's address. Record both in the notes.
-4. Then wait. Dev and QA run the Fix Loop between themselves; you are woken only by their Reports. Both close themselves when the Slice passes.
+2. Then wait. The Dev's `review-request` wakes you.
+3. **Check the Slice.** Spawn a fresh QA sub-agent with your agent tool, on the Slice QA model, with a brief that starts `ps-factory role: QA` and holds the Slice's acceptance criteria, the pull request URL, the Dev's workspace path, the Dev's `review-request` and, after round 1, the previous findings. Never reuse a QA across rounds; its fresh context is the point. Its result is the `verdict`. Record the round and findings in the notes.
+4. **Fix Loop.** On `fail`, send the Dev the verdict and wait for its next `review-request`, then spawn a new QA. If the Dev disputes a finding, or the third round fails, you decide: send the Dev your decision, or, if it changes the Story's scope or needs the owner's judgment, send the Orchestrator a `needs-decision` Report.
 
 ## When a Dev or QA reports
 
-- **QA `pass`:** if the Project Policy lets the Lead merge Slices, merge the Slice pull request into the Story Branch; otherwise send the Orchestrator an `awaiting-merge` Report and wait. Mark the Slice `merged` and increment `Slices merged since last refresh`.
-- **QA `escalate`** (third failed round, or Dev disputes a finding): read both sides and decide. Send the decision to both. If it changes the Story's scope or needs the owner's judgment, send the Orchestrator a `needs-decision` Report instead.
+- **QA `pass` (the sub-agent's verdict):** if the Project Policy lets the Lead merge Slices, merge the Slice pull request into the Story Branch; otherwise send the Orchestrator an `awaiting-merge` Report and wait. Mark the Slice `merged` and increment `Slices merged since last refresh`.
 - **A Dev's question:** answer it from the brief if you can; otherwise send the Orchestrator `needs-decision`.
 
 ## Refresh points
@@ -40,9 +39,9 @@ After a Slice merge, if `Slices merged since last refresh` has reached 3 and no 
 ## Finish the Story
 
 1. When every Slice is merged into the Story Branch, open the Story pull request from the Story Branch into the Target Branch.
-2. Start a fresh QA, on the Story QA model, in your own workspace for the whole-Story check against the Story's acceptance criteria. A failure becomes a new Slice.
-3. When the whole Story passes and every Dev and QA has settled, send the Orchestrator a `story-ready` Report. Wait for every worker you started to settle before sending it: the runtime does not wait for you. The Orchestrator refreshes you after this Report.
+2. Start a fresh QA as a separate agent (runtime file: *start Story QA*), on the Story QA model, in your own workspace for the whole-Story check against the Story's acceptance criteria. A failure becomes a new Slice. It is a separate agent, not a sub-agent, because the check is long and the owner can watch it.
+3. When the whole Story passes and every Dev and the Story QA has settled, send the Orchestrator a `story-ready` Report. Wait for every worker you started to settle before sending it: the runtime does not wait for you. The Orchestrator refreshes you after this Report.
 
 ## Resume
 
-When your brief says to resume, or a hook tells you your memory was reset: read your Story Notes, take over your Run (runtime file: *resume Run*), check which of the listed Devs and QAs are still live (runtime file: *list workers*), reset `Slices merged since last refresh` to 0 if this is a refresh, and continue from where the notes say the Story stands.
+When your brief says to resume, or a hook tells you your memory was reset: read your Story Notes, take over your Run (runtime file: *resume Run*), check which of the listed Devs and the Story QA are still live (runtime file: *list workers*), reset `Slices merged since last refresh` to 0 if this is a refresh, and continue from where the notes say the Story stands.

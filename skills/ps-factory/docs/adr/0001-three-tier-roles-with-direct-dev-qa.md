@@ -1,5 +1,7 @@
 # Three-tier roles with direct Dev–QA messaging
 
+Partly superseded by [ADR 0006](0006-slice-qa-as-lead-subagent.md): a Slice QA is now the Lead's sub-agent and the Dev no longer messages it directly.
+
 The factory runs as Orchestrator → Lead → Dev + QA. Dev and QA message each other directly during a Story's fix loop, report to their Lead, and only the Lead reports to the Orchestrator. A per-Story Lead (on Opus) keeps the Orchestrator's context small and lets several Stories run without the Orchestrator being woken on every Dev–QA round; direct Dev–QA messaging avoids routing each review finding through a middleman.
 
 ## Considered options
