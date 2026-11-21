@@ -16,7 +16,7 @@ All under `~/.ps-factory/<project>/`:
 
 1. Read the Project Policy. If it is missing, tell the owner and offer `/ps-factory init`.
 2. Read `ledger.md` and the tail of `decisions.md`. Each ledger row is an open Story with its Lead's address. Check that each Lead is still reachable (runtime file: *list workers*); mark unreachable ones in the ledger and tell the owner.
-3. Tell the owner, in a few lines, which Stories are open and what waits on them.
+3. Tell the owner, in a few lines, which Stories are open and what waits on them. If this chat is not running Sonnet, mention once that `/model sonnet` is enough for the Orchestrator.
 
 ## When the owner gives you work
 

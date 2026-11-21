@@ -6,13 +6,15 @@ Load Orca's own guide once per session (`orca skills get orchestration`) and kee
 
 | Action | Command |
 | --- | --- |
-| *start Lead* (Orchestrator) | `orca orchestration worker-start --environment local --worktree new-child --name <story> --base-branch <Target Branch> --agent claude --model claude-opus-5-5 --keep-open --task-title "<story>" --spec-file <brief>` |
-| *resume Lead* (Orchestrator, for a refresh) | `orca orchestration worker-start --environment local --worktree branch:feat/<story> --agent claude --model claude-opus-5-5 --keep-open --task-title "<story> (resumed)" --spec-file <brief>` |
-| *start Dev* (Lead) | `orca orchestration worker-start --environment local --worktree new-child --name <story>-<slice> --base-branch feat/<story> --agent claude --model claude-sonnet-5-5 --task-title "<story>/<slice> dev" --spec-file <brief>` |
-| *start QA* (Lead) | `orca orchestration worker-start --environment local --worktree <the Dev's workspace selector> --agent claude --model claude-opus-5-5 --task-title "<story>/<slice> qa" --spec-file <brief>` (for the whole-Story check: `--worktree current`) |
+| *start Lead* (Orchestrator) | `orca orchestration worker-start --environment local --worktree new-child --name <story> --base-branch <Target Branch> --agent claude --model <Lead model> --keep-open --task-title "<story>" --spec-file <brief>` |
+| *resume Lead* (Orchestrator, for a refresh) | `orca orchestration worker-start --environment local --worktree branch:feat/<story> --agent claude --model <Lead model> --keep-open --task-title "<story> (resumed)" --spec-file <brief>` |
+| *start Dev* (Lead) | `orca orchestration worker-start --environment local --worktree new-child --name <story>-<slice> --base-branch feat/<story> --agent claude --model <Dev model> --task-title "<story>/<slice> dev" --spec-file <brief>` |
+| *start QA* (Lead) | `orca orchestration worker-start --environment local --worktree <the Dev's workspace selector> --agent claude --model <Slice QA model> --task-title "<story>/<slice> qa" --spec-file <brief>` (for the whole-Story check: `--worktree current --model <Story QA model>`) |
 | *list workers* | `orca orchestration worker-list --environment local --json` |
 | *release worker* | `orca orchestration worker-release --dispatch <id>` |
 | *resume Run* (Lead after a reset) | `orca orchestration run-use <run_id>` with the Run id from the Story Notes |
+
+`<… model>` is the role's model from the Project Policy's `## Models` section, else the default in SKILL.md.
 
 Every brief's first line is `ps-factory role: <Role>`, its second `Invoke the ps-factory skill and follow your role file.` A worker's address is `dispatch:<dispatch_id>` from the start receipt; a Dev's workspace selector is the `id:` the receipt names. The first `worker-start` binds a Run to the caller: the Orchestrator's Run holds the Leads, each Lead's own Run holds its Devs and QAs.
 
