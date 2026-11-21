@@ -12,6 +12,14 @@ npx skills add PingSunn/skills -g -a claude-code
 | --- | --- |
 | [ps-factory](skills/ps-factory/SKILL.md) | Runs coding work as an agent team on Orca or Herdr: one Orchestrator per project, a Lead per Story, a Dev per Slice and a QA, with Story Branches and small Slice pull requests. |
 
+### ps-factory in 70 seconds
+
+![ps-factory explainer](docs/media/ps-factory-explainer.gif)
+
+[MP4 version](docs/media/ps-factory-explainer.mp4). The animation's source is [docs/media-src/ps-factory-explainer.html](docs/media-src/ps-factory-explainer.html); open it in a browser to replay it.
+
+Quick start: install the repo, open a Claude Code chat in your project's main checkout, run `/ps-factory init` once, then `/ps-factory` and describe the work.
+
 ## Updating
 
 Edit in this clone, push, then on each machine:
