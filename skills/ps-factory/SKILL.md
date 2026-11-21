@@ -1,9 +1,11 @@
 ---
 name: ps-factory
-description: Run coding work as an agent team (Orchestrator → Lead → Dev + QA) on Orca or Herdr. Use when the owner types /ps-factory or asks for "the factory", or when your prompt names you as a ps-factory Orchestrator, Lead, Dev or QA.
+description: PingSunn's software factory. Run coding work as an agent team (Orchestrator → Lead → Dev + QA) on Orca or Herdr. Use when the owner types /ps-factory or asks for "the factory", or when your prompt names you as a ps-factory Orchestrator, Lead, Dev or QA.
 ---
 
 # ps-factory
+
+**P**ing**S**unn's software factory.
 
 One Orchestrator per project takes every instruction from the owner and routes it to Stories. Each Story has a Lead (Opus), and each Slice of it a Dev (Sonnet) and a QA (Opus). Dev and QA work the Fix Loop directly with each other, report to their Lead, and the Lead reports to the Orchestrator. Terms are defined in [CONTEXT.md](CONTEXT.md); use them exactly.
 
