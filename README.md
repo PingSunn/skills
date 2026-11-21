@@ -22,22 +22,22 @@ Quick start: install the repo, open a Claude Code chat in your project's main ch
 
 ### Agent Tree
 
-A real run: one Story that fixes the findings from a code review of a long-lived `upgrade/v2` branch. The owner talks only to the Orchestrator. The Lead owns the Story and its Story Branch, runs a Dev per Slice and spawns a fresh QA sub-agent for every review round. Only the whole-Story QA is a separate agent.
+An example run with a made-up Story: add a checkout flow to a bookshop app. The owner talks only to the Orchestrator. The Lead owns the Story and its Story Branch, runs a Dev per Slice and spawns a fresh QA sub-agent for every review round. Only the whole-Story QA is a separate agent.
 
 ```text
 Owner
 └── Orchestrator                      one per project, only role that talks to the owner
-    └── Lead: v2-review-fixes         owns the Story, Story Branch fix/v2-review
-        ├── Dev S1  schema split + migration guards      own workspace, Slice PR
+    └── Lead: bookshop-checkout       owns the Story, Story Branch feat/bookshop-checkout
+        ├── Dev S1  cart totals                           own workspace, Slice PR
         │   └── QA sub-agent          round 1: pass
-        ├── Dev S2  silent data loss
+        ├── Dev S2  coupon codes
         │   └── QA sub-agent          round 1: pass
-        ├── Dev S3  authorization
+        ├── Dev S3  payment retries
         │   ├── QA sub-agent          round 1: fail
         │   └── QA sub-agent          round 2: pass (fresh agent, previous findings in its brief)
-        ├── Dev S4  small fixes
+        ├── Dev S4  order confirmation email
         │   └── QA sub-agent          round 1: pass
-        ├── Dev S5  fix for the whole-Story QA finding
+        ├── Dev S5  fix for the Story QA finding (coupon rounding)
         │   └── QA sub-agent          round 1: pass
         └── Story QA                  separate agent on the Story PR, rerun after S5
 ```
@@ -50,7 +50,7 @@ How the work flowed:
 4. When every Slice is in, the Lead opens one Story PR from the Story Branch into the Target Branch and starts the Story QA. A finding there becomes one more Slice (S5 here), and the Story QA runs again.
 5. The Lead sends `story-ready`, and the Orchestrator tells the owner. The owner reviews the one Story PR and merges it.
 
-When something outside a Slice breaks (here a CI job failed on every later Slice PR because of a stale runner ref), the Lead fixes it in its own small PR into the Story Branch, the Orchestrator merges it first, and the Slice branches pick it up before they ask for a merge.
+When something outside a Slice breaks (say a CI job fails on every later Slice PR because of a stale cache on the runner), the Lead fixes it in its own small PR into the Story Branch, the Orchestrator merges it first, and the Slice branches pick it up before they ask for a merge.
 
 ## Updating
 
