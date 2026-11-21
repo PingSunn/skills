@@ -1,6 +1,6 @@
 # ps-factory
 
-The owner's project-agnostic way of running coding work through a team of agents: one Orchestrator routes work to per-Story Leads, and each Lead runs a Dev and a QA that work the Story together.
+The owner's project-agnostic way of running coding work through a team of agents: one Orchestrator routes work to per-Story Leads, and each Lead runs a Dev per Slice and checks the Slice with a QA it spawns as a sub-agent.
 
 ## Language
 
@@ -11,7 +11,7 @@ The single top-level agent per project that the owner talks to; the owner gives 
 _Avoid_: coordinator, manager, boss
 
 **Lead**:
-The agent that owns one Story end to end, runs its Devs and its QA, and reports the Story's outcome to the Orchestrator. A project has at most one Orchestrator and, by default, at most three open Leads at a time.
+The agent that owns one Story end to end, runs its Devs, spawns a QA to check each Slice, starts the whole-Story QA, and reports the Story's outcome to the Orchestrator. A project has at most one Orchestrator and, by default, at most three open Leads at a time.
 _Avoid_: base, story lead, foreman, supervisor
 
 **Dev**:
@@ -19,7 +19,7 @@ An agent that implements part of a Story's change; a Lead may run several Devs w
 _Avoid_: developer, builder, worker
 
 **QA**:
-The agent that independently checks one Slice, or a whole Story, against its acceptance criteria and gives a verdict; a fresh QA is started for each.
+The agent that independently checks one Slice, or a whole Story, against its acceptance criteria and gives a verdict. A Slice QA is a sub-agent the Lead spawns fresh for each round; the whole-Story QA is a separate agent.
 _Avoid_: reviewer, tester, checker
 
 ### Work
@@ -29,7 +29,7 @@ One unit of work with its own outcome, owned by exactly one Lead; it may come fr
 _Avoid_: เรื่อง, task, ticket, job
 
 **Fix Loop**:
-The rounds in which QA fails a Dev's change and Dev revises it; after three failed rounds, or when Dev disputes a finding, the Lead decides.
+The rounds in which QA fails a Dev's change and Dev revises it, with the Lead carrying each verdict and spawning a fresh QA per round; after three failed rounds, or when Dev disputes a finding, the Lead decides.
 _Avoid_: review cycle, iteration
 
 **Story Ledger**:

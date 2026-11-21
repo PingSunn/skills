@@ -10,7 +10,7 @@ npx skills add PingSunn/skills -g -a claude-code
 
 | Skill | What it does |
 | --- | --- |
-| [ps-factory](skills/ps-factory/SKILL.md) | Runs coding work as an agent team on Orca or Herdr: one Orchestrator per project, a Lead per Story, a Dev per Slice and a QA, with Story Branches and small Slice pull requests. |
+| [ps-factory](skills/ps-factory/SKILL.md) | Runs coding work as an agent team on Orca or Herdr: one Orchestrator per project, a Lead per Story, a Dev per Slice and a QA sub-agent per review round, with Story Branches and small Slice pull requests. |
 
 ### ps-factory in 30 seconds
 
@@ -19,6 +19,38 @@ npx skills add PingSunn/skills -g -a claude-code
 The clip is rendered frame by frame from [docs/media-src/ps-factory-clip.html](docs/media-src/ps-factory-clip.html) with [docs/media-src/render.cjs](docs/media-src/render.cjs) (`node render.cjs <html> <out.mp4> 60`, needs Playwright and ffmpeg).
 
 Quick start: install the repo, open a Claude Code chat in your project's main checkout, run `/ps-factory init` once, then `/ps-factory` and describe the work.
+
+### Agent Tree
+
+An example run with a made-up Story: add a checkout flow to a bookshop app. The owner talks only to the Orchestrator. The Lead owns the Story and its Story Branch, runs a Dev per Slice and spawns a fresh QA sub-agent for every review round. Only the whole-Story QA is a separate agent.
+
+```text
+Owner
+└── Orchestrator                      one per project, only role that talks to the owner
+    └── Lead: bookshop-checkout       owns the Story, Story Branch feat/bookshop-checkout
+        ├── Dev S1  cart totals                           own workspace, Slice PR
+        │   └── QA sub-agent          round 1: pass
+        ├── Dev S2  coupon codes
+        │   └── QA sub-agent          round 1: pass
+        ├── Dev S3  payment retries
+        │   ├── QA sub-agent          round 1: fail
+        │   └── QA sub-agent          round 2: pass (fresh agent, previous findings in its brief)
+        ├── Dev S4  order confirmation email
+        │   └── QA sub-agent          round 1: pass
+        ├── Dev S5  fix for the Story QA finding (coupon rounding)
+        │   └── QA sub-agent          round 1: pass
+        └── Story QA                  separate agent on the Story PR, rerun after S5
+```
+
+How the work flowed:
+
+1. The Orchestrator routes the Story to a Lead. The Lead cuts the Story Branch and splits the work into Slices.
+2. Each Slice: the Dev builds it and sends the Lead a `review-request`. The Lead spawns a fresh QA sub-agent, gets a `verdict` back as its result, and forwards a `fail` to the Dev. That is the Fix Loop. When QA passes, the Lead sends the Orchestrator an `awaiting-merge` message with the Slice PR, the verdict and the CI state.
+3. The Orchestrator merges a Slice PR into the Story Branch with a merge commit once CI and e2e are green, then replies to the Lead. It never merges into the Target Branch without the owner.
+4. When every Slice is in, the Lead opens one Story PR from the Story Branch into the Target Branch and starts the Story QA. A finding there becomes one more Slice (S5 here), and the Story QA runs again.
+5. The Lead sends `story-ready`, and the Orchestrator tells the owner. The owner reviews the one Story PR and merges it.
+
+When something outside a Slice breaks (say a CI job fails on every later Slice PR because of a stale cache on the runner), the Lead fixes it in its own small PR into the Story Branch, the Orchestrator merges it first, and the Slice branches pick it up before they ask for a merge.
 
 ## Updating
 

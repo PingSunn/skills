@@ -2,16 +2,11 @@
 
 Every Report starts with one subject line, `<type>: <story>[/<slice>]`, then the fields below. Write it so the receiver can act without asking back: links, commands run with their results, and evidence instead of claims.
 
-## Dev ↔ QA
+## Dev ↔ Lead and QA → Lead
 
-- **`review-request`** (Dev → QA): Slice pull request URL, workspace path, checks run with results, each acceptance criterion with how it is met. In later rounds: each previous finding number with what changed, or why the Dev disputes it.
-- **`verdict`** (QA → Dev): `pass` or `fail`, round number, numbered findings (severity `blocker` / `should-fix` / `nit`, the criterion broken, evidence: command output, file:line, reproduction).
-
-## Dev / QA → Lead
-
-- **`slice-done`** (Dev): Slice pull request URL, final round count, checks with results.
-- **`pass`** (QA): Slice name, pull request URL, round count, one line on what was verified.
-- **`escalate`** (QA): Slice, round count, the open findings, the Dev's position, the QA's position.
+- **`review-request`** (Dev → Lead): Slice pull request URL, workspace path, checks run with results, each acceptance criterion with how it is met. In later rounds: each previous finding number with what changed, or why the Dev disputes it.
+- **`verdict`** (QA → Lead, as the sub-agent's result; the Lead forwards a `fail` to the Dev): `pass` or `fail`, round number, numbered findings (severity `blocker` / `should-fix` / `nit`, the criterion broken, evidence: command output, file:line, reproduction). The whole-Story QA sends its `verdict` to the Lead the same way.
+- **`slice-done`** (Dev → Lead): Slice pull request URL, final round count, checks with results.
 - A Dev's question: what is unclear, the options, the Dev's recommendation.
 
 ## Lead → Orchestrator
