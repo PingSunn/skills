@@ -25,7 +25,7 @@ Quick start: install the repo, open a Claude Code chat in your project's main ch
 Edit in this clone, push, then on each machine:
 
 ```sh
-npx skills update -g
+npx skills update ps-factory -g
 ```
 
 ## Other skills I use
