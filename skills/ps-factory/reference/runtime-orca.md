@@ -18,7 +18,7 @@ Every Story workspace is a child of the project's main checkout, so the owner se
 
 `<… model>` is the role's model from the Project Policy's `## Models` section, else the default in SKILL.md.
 
-Every brief's first line is `ps-factory role: <Role>`, its second `Invoke the ps-factory skill and follow your role file.` A worker's address is `dispatch:<dispatch_id>` from the start receipt; a Dev's workspace selector is the `id:` the receipt names. The first `worker-start` binds a Run to the caller: the Orchestrator's Run holds the Leads, each Lead's own Run holds its Devs and the Story QA. A Slice QA is not started through Orca: the Lead spawns it with its agent tool, passing `<Slice QA model>` as the model.
+Every brief's first line is `ps-factory role: <Role>`, its second `Invoke the ps-factory skill and follow your role file.`, its third `Write English everywhere, including your terminal replies.` A worker's address is `dispatch:<dispatch_id>` from the start receipt; a Dev's workspace selector is the `id:` the receipt names. The first `worker-start` binds a Run to the caller: the Orchestrator's Run holds the Leads, each Lead's own Run holds its Devs and the Story QA. A Slice QA is not started through Orca: the Lead spawns it with its agent tool, passing `<Slice QA model>` as the model.
 
 Lifetimes: Leads use `--keep-open` because Orca auto-releases a worker about two minutes after its `worker_done`, and a Lead must survive between tasks. The Story QA, started in the Lead's workspace, closes on its own after its `worker_done`. A Dev in a new child workspace stays open until released: the Lead releases it once its Slice is merged.
 

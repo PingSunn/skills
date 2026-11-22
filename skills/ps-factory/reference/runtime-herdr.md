@@ -11,7 +11,7 @@ The first agent you start goes in a split to the right of your pane; every furth
 1. Create the workspace the role needs: a new git worktree for a Lead (based on the Target Branch) or a Dev (based on `feat/<story>`); the Story QA shares the Lead's. A Slice QA needs no pane: the Lead spawns it as a sub-agent.
 2. Split a pane for it with `--cwd <that worktree>` and `--no-focus`.
 3. `herdr agent start <name> --kind claude --pane <pane id> -- --model <model id>`. Names: `lead-<story>`, `qa-<story>` (Story QA only), `dev-<story>-<slice>`.
-4. Submit the brief: `herdr agent prompt <name> "<brief>"`. Its first line is `ps-factory role: <Role>`, its second `Invoke the ps-factory skill and follow your role file.`
+4. Submit the brief: `herdr agent prompt <name> "<brief>"`. Its first line is `ps-factory role: <Role>`, its second `Invoke the ps-factory skill and follow your role file.`, its third `Write English everywhere, including your terminal replies.`
 
 A role's address is its agent name.
 
