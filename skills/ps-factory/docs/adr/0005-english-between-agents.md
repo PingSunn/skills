@@ -7,3 +7,5 @@ Decision: only the Orchestrator talks to the owner, in the owner's language. All
 Why: the owner-facing edge is the only place where the owner's language matters, and the Orchestrator already owns that edge. Keeping the rest in English saves tokens on every hop and matches the language of code, commits and documentation.
 
 Considered options: owner's language everywhere (rejected: costs tokens at every hop); English everywhere including the owner chat (rejected: the owner wants Thai replies).
+
+Addendum (2026-11-23): the owner's machine-wide Claude Code setting `"language": "thai"` made Leads reply in Thai in their own terminals, although Reports stayed English. Lead, Dev and QA now write English everywhere, terminal replies included, and the role brief overrides any language setting. Only the Orchestrator follows the owner's language.
