@@ -14,6 +14,8 @@ Load Orca's own guide once per session (`orca skills get orchestration`) and kee
 | *release worker* | `orca orchestration worker-release --dispatch <id>` |
 | *resume Run* (Lead after a reset) | `orca orchestration run-use <run_id>` with the Run id from the Story Notes |
 
+Every Story workspace is a child of the project's main checkout, so the owner sees each Story under it in Orca's sidebar. `new-child` does this on its own. If the Orchestrator cuts the Story Branch itself and creates the workspace by hand, it passes the parent explicitly: `orca worktree create --environment local --repo path:<main checkout> --name <story> --base-branch origin/feat/<story> --branch feat/<story> --setup skip --parent-worktree path:<main checkout> --json`, then starts the Lead with `--worktree branch:feat/<story>`. Never pass `--no-parent` for a Story. A workspace already created without a parent is fixed with `orca worktree set --worktree branch:feat/<story> --parent-worktree path:<main checkout> --json`.
+
 `<… model>` is the role's model from the Project Policy's `## Models` section, else the default in SKILL.md.
 
 Every brief's first line is `ps-factory role: <Role>`, its second `Invoke the ps-factory skill and follow your role file.` A worker's address is `dispatch:<dispatch_id>` from the start receipt; a Dev's workspace selector is the `id:` the receipt names. The first `worker-start` binds a Run to the caller: the Orchestrator's Run holds the Leads, each Lead's own Run holds its Devs and the Story QA. A Slice QA is not started through Orca: the Lead spawns it with its agent tool, passing `<Slice QA model>` as the model.
