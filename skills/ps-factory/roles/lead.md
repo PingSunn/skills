@@ -29,7 +29,8 @@ Your Story Notes file (`~/.ps-factory/<project>/stories/<story>.md`) holds:
 
 ## When a Dev or QA reports
 
-- **QA `pass` (the sub-agent's verdict):** if the Project Policy lets the Lead merge Slices, merge the Slice pull request into the Story Branch; otherwise send the Orchestrator an `awaiting-merge` Report and wait. Mark the Slice `merged` and increment `Slices merged since last refresh`.
+- **QA `pass` (the sub-agent's verdict):** mark the draft Slice pull request ready for review (`gh pr ready <url>`) and wait for its CI. If CI fails, treat the failure as a QA `fail` finding and run the Fix Loop. When CI is green: if the Project Policy lets the Lead merge Slices, merge the Slice pull request into the Story Branch; otherwise send the Orchestrator an `awaiting-merge` Report and wait. Mark the Slice `merged` and increment `Slices merged since last refresh`.
+- **Ready order.** When several Slices pass QA close together, mark them ready one at a time in the order you want them merged, and rebase the next one on the Story Branch after each merge, so CI runs once per Slice on the base it will land on.
 - **A Dev's question:** answer it from the brief if you can; otherwise send the Orchestrator `needs-decision`.
 
 ## Refresh points
