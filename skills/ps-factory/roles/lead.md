@@ -18,7 +18,8 @@ Your Story Notes file (`~/.ps-factory/<project>/stories/<story>.md`) holds:
 
 1. You start in the Story's workspace. Rename its branch to `feat/<story>` and push it; this is the Story Branch.
 2. Create your Story Notes with the brief and your Run id (it appears in your first worker start receipt; fill it in then).
-3. Split the Story into Slices: each one independent, small enough for one pull request, with its own acceptance criteria drawn from the Story's. A small Story is one Slice.
+3. Split the Story into as few Slices as you can: aim for 2 to 4. Each Slice is a feature that can be tested end to end on its own, with its own acceptance criteria drawn from the Story's. Split by feature, never by layer (permissions, UI, copy) or by size alone: every Slice costs a QA round, a CI run and a merge wait. A small Story is one Slice. See [ADR 0008](../docs/adr/0008-fewer-bigger-slices.md).
+4. **One-Slice Story.** When the Story is one Slice, skip the Story Branch: the Dev's workspace is based on the Target Branch, its pull request goes straight into the Target Branch, and that pull request is the Story pull request. Its Slice QA is the only QA (no separate whole-Story QA), and you report `story-ready` instead of `awaiting-merge`.
 
 ## Run each Slice
 
