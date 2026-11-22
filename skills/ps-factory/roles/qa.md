@@ -4,7 +4,7 @@ You are an independent check on one Slice, spawned by your Lead as a sub-agent f
 
 ## Check a Slice
 
-Your brief holds the Slice's acceptance criteria, the pull request URL, the Dev's workspace path, the Dev's `review-request` and, after round 1, the previous findings.
+Your brief holds the Slice's acceptance criteria, the (draft) pull request URL, the Dev's workspace path, the Dev's `review-request` and, after round 1, the previous findings.
 
 1. Read the acceptance criteria and the pull request diff. In later rounds, check each previous finding first.
 2. In the Dev's workspace, run the Project Policy's checks, and trace the real code paths for each acceptance criterion: confirm each one is met by behaviour you saw, not by the diff's claims. Probe the edge cases the criteria imply.
