@@ -18,8 +18,14 @@ Every run starts by resolving the **target**: which open FigCraft file this repo
 2. No link yet: show `doc.list` to the owner with AskUserQuestion, ask once which file (and which pages) belong to this repo, write `.claude/figcraft.json`, and add `.claude/figcraft.json` to the repo's `.gitignore`.
 3. The linked file is not open: tell the owner to open it, then stop.
 4. `pages` empty or missing means every page. A thread whose `pageName` is not in `pages` is skipped and reported.
-5. Open the report with the file name and the pages touched.
-6. Create layers with an explicit `parent`; a layer created without one lands on the current page, which is not necessarily the thread's page. Call `page.select` only when no id-based call can do the job.
+5. **Sync check.** The file and the code change between runs, so the link is a claim to verify, not a fact. Before acting, check:
+   - every name in `pages` exists in `page.list`;
+   - every key in `frames` is a frame in the linked file (`inspect_document` by name) and every value is a path that exists in the repo (`test -e`);
+   - the threads' `frameName` values that `frames` does not know are listed as unmapped.
+
+   Any miss is **drift**. Show the owner the drift with AskUserQuestion (rename the mapping, remove it, or skip those threads), update `.claude/figcraft.json` with the answer, and work only the threads whose mapping is sound. No drift: still state the resolved target in one line. `/ps-figcraft:code` always asks the owner to confirm the mapping for each frame it is about to change, since a wrong file means a wrong edit.
+6. Open the report with the file name and the pages touched.
+7. Create layers with an explicit `parent`; a layer created without one lands on the current page, which is not necessarily the thread's page. Call `page.select` only when no id-based call can do the job.
 
 `frames` maps a frame name to its source file. `/ps-figcraft:code` reads it and adds the mappings it discovers.
 
