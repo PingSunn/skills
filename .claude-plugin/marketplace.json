@@ -1,0 +1,16 @@
+{
+  "name": "pingsunn-skills",
+  "metadata": {
+    "description": "Agent plugins by PingSunn."
+  },
+  "owner": {
+    "name": "PingSunn"
+  },
+  "plugins": [
+    {
+      "name": "figcraft",
+      "source": "./plugins/figcraft",
+      "description": "Turn FigCraft comments into design fixes, code changes and pull requests."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "figcraft",
+  "description": "Turn FigCraft comments into design fixes, code changes and pull requests.",
+  "version": "0.1.0",
+  "author": {
+    "name": "PingSunn"
+  },
+  "repository": "https://github.com/PingSunn/skills",
+  "keywords": ["figcraft", "design", "comments", "review"]
+}
