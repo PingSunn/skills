@@ -12,17 +12,17 @@ npx skills add PingSunn/skills -g -a claude-code
 | --- | --- |
 | [ps-factory](skills/ps-factory/SKILL.md) | Runs coding work as an agent team on Orca or Herdr: one Orchestrator per project, a Lead per Story, a Dev per Slice and a QA sub-agent per review round, with Story Branches and small Slice pull requests. |
 
-### figcraft plugin
+### ps-figcraft plugin
 
 Three commands that turn comments in a FigCraft file into work. A comment counts when it starts with `!fix`.
 
 | Command | What it does |
 | --- | --- |
-| `/figcraft:fix` | Fixes the design in FigCraft from open `!fix` threads and replies with what changed. Asks before touching a variable or component used elsewhere. Leaves resolving to you. |
-| `/figcraft:code` | Makes the code match the fixed threads on a new branch and stops at the commit. |
-| `/figcraft:to-pr` | Opens a pull request with before and after screenshots of the real pages. |
+| `/ps-figcraft:fix` | Fixes the design in FigCraft from open `!fix` threads and replies with what changed. Asks before touching a variable or component used elsewhere. Leaves resolving to you. |
+| `/ps-figcraft:code` | Makes the code match the fixed threads on a new branch and stops at the commit. |
+| `/ps-figcraft:to-pr` | Opens a pull request with before and after screenshots of the real pages. |
 
-Install: `/plugin marketplace add PingSunn/skills`, then `/plugin install figcraft@pingsunn-skills`. FigCraft must run with `--control 41871` and its MCP server attached (`figcraft-cli mcp --attach 41871`).
+Install: `/plugin marketplace add PingSunn/skills`, then `/plugin install ps-figcraft@pingsunn-skills`. FigCraft must run with `--control 41871` and its MCP server attached (`figcraft-cli mcp --attach 41871`).
 
 ### ps-factory in 30 seconds
 

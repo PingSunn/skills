@@ -4,7 +4,7 @@ description: Open a pull request for the coded FigCraft threads, with before and
 disable-model-invocation: true
 ---
 
-# /figcraft:to-pr
+# /ps-figcraft:to-pr
 
 Ship every **coded** thread on the current branch as one pull request. Thread states and tools are in [../../reference/threads.md](../../reference/threads.md).
 

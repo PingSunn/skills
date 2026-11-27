@@ -1,5 +1,5 @@
 {
-  "name": "figcraft",
+  "name": "ps-figcraft",
   "description": "Turn FigCraft comments into design fixes, code changes and pull requests.",
   "version": "0.1.0",
   "author": {

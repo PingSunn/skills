@@ -4,11 +4,11 @@ description: Turn FigCraft threads that were fixed in the design into code chang
 disable-model-invocation: true
 ---
 
-# /figcraft:code
+# /ps-figcraft:code
 
 Make the code match every **fixed** thread. Thread states, tools and the attach check are in [../../reference/threads.md](../../reference/threads.md); read it first.
 
-Done when each fixed thread has a commit and a `Code:` reply, then stop: no push, no pull request. `/figcraft:to-pr` opens it.
+Done when each fixed thread has a commit and a `Code:` reply, then stop: no push, no pull request. `/ps-figcraft:to-pr` opens it.
 
 ## Steps
 
