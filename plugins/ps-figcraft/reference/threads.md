@@ -2,11 +2,32 @@
 
 Shared by `/ps-figcraft:fix`, `/ps-figcraft:code` and `/ps-figcraft:to-pr`. This file is the single source of truth for what a thread's state means.
 
+## Target
+
+Every run starts by resolving the **target**: which open FigCraft file this repo works on. The link lives in `.claude/figcraft.json` at the repo root:
+
+```json
+{
+  "file": "/Users/me/Documents/FigCraft/project/project-design.figcraft",
+  "pages": ["Screens"],
+  "frames": { "Login": "src/features/auth/components/login-screen.tsx" }
+}
+```
+
+1. Read the link. `run_command doc.list` returns the open files with their ids; the link's `file` picks one. Pass that id as `document` on **every** tool call: the default is whichever file is in front, which changes when the owner switches tabs.
+2. No link yet: show `doc.list` to the owner with AskUserQuestion, ask once which file (and which pages) belong to this repo, write `.claude/figcraft.json`, and add `.claude/figcraft.json` to the repo's `.gitignore`.
+3. The linked file is not open: tell the owner to open it, then stop.
+4. `pages` empty or missing means every page. A thread whose `pageName` is not in `pages` is skipped and reported.
+5. Open the report with the file name and the pages touched.
+6. Create layers with an explicit `parent`; a layer created without one lands on the current page, which is not necessarily the thread's page. Call `page.select` only when no id-based call can do the job.
+
+`frames` maps a frame name to its source file. `/ps-figcraft:code` reads it and adds the mappings it discovers.
+
 ## Reading
 
 FigCraft's MCP server is `figcraft`; its tools are deferred, so load them with ToolSearch `+figcraft` first. Commands run through `run_command`:
 
-- `comment.list {page: "all", filter: "open", query: "!fix"}` returns threads with text, anchor node id, frame, page and replies.
+- `comment.list {document, page: "all", filter: "open", query: "!fix"}` returns threads with text, anchor node id, frame, page and replies.
 - `comment.reply {id, text, author: "Claude"}` replies. Always pass `author: "Claude"`: the author name is how a thread's state is read.
 - `comment.resolve` belongs to the owner. Leave threads open.
 

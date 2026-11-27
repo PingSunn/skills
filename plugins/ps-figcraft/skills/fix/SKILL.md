@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # /ps-figcraft:fix
 
-Work every **todo** thread of the open FigCraft file. Thread states, the tools and the attach check are in [../../reference/threads.md](../../reference/threads.md); read it first.
+Work every **todo** thread of the open FigCraft file. Thread states, the **Target** (which file to edit) and the attach check are in [../../reference/threads.md](../../reference/threads.md); read it first and resolve the target before touching anything.
 
 Done when each todo thread is **fixed** or **waiting**, or when there are none (say so).
 
