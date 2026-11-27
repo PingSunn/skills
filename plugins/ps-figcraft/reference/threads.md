@@ -17,7 +17,7 @@ Every run starts by resolving the **target**: which open FigCraft file this repo
 1. Read the link. `run_command doc.list` returns the open files with their ids; the link's `file` picks one. Pass that id as `document` on **every** tool call: the default is whichever file is in front, which changes when the owner switches tabs.
 2. No link yet: show `doc.list` to the owner with AskUserQuestion, ask once which file (and which pages) belong to this repo, write `.claude/figcraft.json`, and add `.claude/figcraft.json` to the repo's `.gitignore`.
 3. The linked file is not open: tell the owner to open it, then stop.
-4. `pages` empty or missing means every page. A thread whose `pageName` is not in `pages` is skipped and reported.
+4. `pages` lists page names; an entry ending in `*` is a prefix (`"User |*"`). Empty or missing means every page. A thread whose `pageName` matches no entry is skipped and reported.
 5. **Sync check.** The file and the code change between runs, so the link is a claim to verify, not a fact. Before acting, check:
    - every name in `pages` exists in `page.list`;
    - every key in `frames` is a frame in the linked file (`inspect_document` by name) and every value is a path that exists in the repo (`test -e`);
@@ -28,6 +28,12 @@ Every run starts by resolving the **target**: which open FigCraft file this repo
 7. Create layers with an explicit `parent`; a layer created without one lands on the current page, which is not necessarily the thread's page. Call `page.select` only when no id-based call can do the job.
 
 `frames` maps a frame name to its source file. `/ps-figcraft:code` reads it and adds the mappings it discovers.
+
+## Page layout
+
+A page holds one feature, named `<Scope> | <Feature>` with Scope one of `User`, `Organization`, `Platform` (for example `User | Census entry`, `Platform | Setting`). Desktop screens sit left, phone screens right, each with a caption frame above it (name and device, purpose line). Work that adds a screen goes on the page whose name fits; with no fitting page, ask the owner for the name before creating one. A page's feature is the part after `|`: `/ps-figcraft:code` uses it to narrow the source search.
+
+After any batch that creates or moves layers, run `page.list` and compare the child counts with what the batch should have produced. A layer that landed on the wrong page, or a batch whose result is missing, is fixed or reported before the next thread.
 
 ## Reading
 
