@@ -31,7 +31,7 @@ Every run starts by resolving the **target**: which open FigCraft file this repo
 
 ## Page layout
 
-A page holds one feature, named `<Scope> | <Feature>` with Scope one of `User`, `Organization`, `Platform` (for example `User | Census entry`, `Platform | Setting`). Desktop screens sit left, phone screens right, each with a caption frame above it (name and device, purpose line). Work that adds a screen goes on the page whose name fits; with no fitting page, ask the owner for the name before creating one. A page's feature is the part after `|`: `/ps-figcraft:code` uses it to narrow the source search.
+A page holds one feature, named `<Scope> | <Feature>` with Scope one of `User`, `Organization`, `Platform` (for example `User | Census entry`, `Platform | Setting`). Desktop screens sit left (x 0, y 140), phone screens right (x 1560, y 140). The frame name is the label: name each screen after its artboard and add no caption layers. Work that adds a screen goes on the page whose name fits; with no fitting page, ask the owner for the name before creating one. A page's feature is the part after `|`: `/ps-figcraft:code` uses it to narrow the source search.
 
 After any batch that creates or moves layers, run `page.list` and compare the child counts with what the batch should have produced. A layer that landed on the wrong page, or a batch whose result is missing, is fixed or reported before the next thread.
 
