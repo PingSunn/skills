@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # /ps-figcraft:code
 
-Make the code match every **fixed** thread. Thread states, tools and the attach check are in [../../reference/threads.md](../../reference/threads.md); read it first.
+Make the code match every **fixed** thread. Thread states, the **Target** (the repo's FigCraft link) and the attach check are in [../../reference/threads.md](../../reference/threads.md); read it first.
 
 Done when each fixed thread has a commit and a `Code:` reply, then stop: no push, no pull request. `/ps-figcraft:to-pr` opens it.
 
@@ -14,7 +14,7 @@ Done when each fixed thread has a commit and a `Code:` reply, then stop: no push
 
 1. **Read the project.** `AGENTS.md`, `CLAUDE.md`, `DESIGN.md` and the project's check commands. Follow what they say about framework docs, comments, ADRs and tests.
 2. **Branch.** Cut `fix/<slug>` from `main`. A feature integration branch named in the project's rules replaces `main`.
-3. **Map.** For each thread, find the source file from the frame and layer names (`Grep` the component or route name). A thread whose file cannot be found is skipped and reported.
+3. **Map.** For each thread, take the source file from the link's `frames` map; when the frame is absent, find it from the frame and layer names, narrowed by the page's feature (`User | History` means history) (`Grep` the component or route name) and add the mapping to `.claude/figcraft.json`. Before editing, confirm each frame-to-file mapping with the owner (AskUserQuestion; the **Sync check** in the reference). A thread whose file cannot be found or whose mapping the owner rejects is skipped and reported.
 4. **Before.** Start the dev server on a free high port (check with `lsof -ti tcp:<port>` first; never reclaim a busy one). Screenshot each affected page at the frame's width into `.figcraft-pr/<branch>/before-<screen>.png`, adding `.figcraft-pr/` to `.git/info/exclude`. A page behind sign-in uses the project's test login; with none, ask the owner.
 5. **Edit.** Change the code to match the design: tokens from the project's CSS over raw values. Use `shadcn` for components under a `components.json`, `modern-web-guidance` for CSS and layout.
 6. **Check.** Run the project's checks (typecheck, lint on changed files, the affected tests).

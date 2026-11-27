@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # /ps-figcraft:to-pr
 
-Ship every **coded** thread on the current branch as one pull request. Thread states and tools are in [../../reference/threads.md](../../reference/threads.md).
+Ship every **coded** thread on the current branch as one pull request. Thread states, the **Target** and tools are in [../../reference/threads.md](../../reference/threads.md).
 
 Done when the pull request is open with before and after images and each thread has a `PR:` reply. Never merge; the owner merges with the project's own merge script.
 

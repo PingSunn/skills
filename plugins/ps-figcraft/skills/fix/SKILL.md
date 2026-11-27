@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # /ps-figcraft:fix
 
-Work every **todo** thread of the open FigCraft file. Thread states, the tools and the attach check are in [../../reference/threads.md](../../reference/threads.md); read it first.
+Work every **todo** thread of the open FigCraft file. Thread states, the **Target** (which file to edit) and the attach check are in [../../reference/threads.md](../../reference/threads.md); read it first and resolve the target before touching anything.
 
 Done when each todo thread is **fixed** or **waiting**, or when there are none (say so).
 
@@ -20,4 +20,4 @@ Done when each todo thread is **fixed** or **waiting**, or when there are none (
 6. **Conflict.** A comment that breaks a `DESIGN.md` or brand-kit rule is applied as written, and the reply names the rule.
 7. **Reply** `Fixed: <layer>: <old> → <new>` per change, plus any rule warning. Leave the thread open: the owner resolves.
 
-After the last thread, `save_file` once. Report to the owner per thread: fixed, waiting, or skipped, with one line each.
+After each thread's batch, check placement as the reference's **Page layout** says. After the last thread, `save_file` once. Report to the owner per thread: fixed, waiting, or skipped, with one line each.
